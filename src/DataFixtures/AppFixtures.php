@@ -16,6 +16,7 @@ class AppFixtures extends Fixture
         TagFactory::createMany(5);
 
         ProductFactory::createMany(20, [
+            //'comments' => CommentFactory::new()->many(5),
             'comments' => CommentFactory::new()->many(0, 5),
             'tags'     => TagFactory::randomRange(2, 5)
             //'tags'     => TagFactory::randomSet(2)
