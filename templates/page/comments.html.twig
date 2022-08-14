@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PageController!{% endblock %}
+
+{% block body %}
+    <h1 class="mb-4">Comentarios</h1>
+
+    {% for comment in comments %}
+        <h4>
+            <a 
+                href="{{ path('app_product', { id: comment.product.id }) }}"
+                class="text-dark text-decoration-none"
+            >
+                {{ comment.product.name }}
+            </a>
+        </h4>
+
+        {{ include('page/_comment.html.twig') }}
+
+    {% endfor %}
+{% endblock %}

@@ -1,13 +1,15 @@
-<h2>
-    <a 
-        href="{{ path('app_product', { id: product.id }) }}" 
-        class="text-dark text-decoration-none"
-    >
-        {{ product.name }}
-    </a>
-</h2>
-<p>
-    {{ product.summary }}
-</p>
+<div class="mb-4">
+    <h2>
+        <a 
+            href="{{ path('app_product', { id: product.id }) }}" 
+            class="text-dark text-decoration-none"
+        >
+            {{ product.name }}
+        </a>
+    </h2>
+    <p>
+        {{ product.summary }}
+    </p>
 
-{{ include('page/_info.html.twig') }}
+    {{ include('page/_info.html.twig') }}
+</div>
