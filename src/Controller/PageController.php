@@ -24,8 +24,15 @@ class PageController extends AbstractController
     public function tag(Tag $tag): Response
     {
         return $this->render('page/tag.html.twig', [
-            'tag' => $tag,
-            //'products' => $tag->getProducts()
+            'tag' => $tag
+        ]);
+    }
+
+    #[Route('/producto/{id}', name: 'app_product')]
+    public function product(Product $product): Response
+    {
+        return $this->render('page/product.html.twig', [
+            'product' => $product
         ]);
     }
 }
