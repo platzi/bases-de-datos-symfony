@@ -17,7 +17,7 @@ class PageController extends AbstractController
     public function home(EntityManagerInterface $entityManager): Response
     {
         return $this->render('page/home.html.twig', [
-            'products' => $entityManager->getRepository(Product::class)->findAll()
+            'products' => $entityManager->getRepository(Product::class)->findLatest()
         ]);
     }
 

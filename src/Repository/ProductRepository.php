@@ -39,6 +39,20 @@ class ProductRepository extends ServiceEntityRepository
         }
     }
 
+    public function findLatest(): array
+    {
+        // dd('Llegamos al método');
+        $query = $this->getEntityManager()->createQuery(
+            'SELECT p
+            FROM App\Entity\Product p
+            ORDER BY p.id DESC'
+        )->setMaxResults(12);
+
+        //dd($query->getResult());
+
+        return $query->getResult();
+    }
+
 //    /**
 //     * @return Product[] Returns an array of Product objects
 //     */
