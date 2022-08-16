@@ -39,30 +39,19 @@ class ProductRepository extends ServiceEntityRepository
         }
     }
 
-    public function findLatest(): array
+    public function findLatest($tag): array
     {
-        return $this->createQueryBuilder('product')
+        $qb = $this->createQueryBuilder('product')
             ->addSelect('comments', 'tags')
             ->leftJoin('product.comments', 'comments')
             ->leftJoin('product.tags', 'tags')
-            ->orderBy('product.id', 'DESC')
-            ->getQuery()
-            ->getResult();
-    }
+            ->orderBy('product.id', 'DESC');
+        
+        if ($tag) {
+            $qb->setParameter('tag', $tag)->andWhere(':tag MEMBER OF product.tags');
+        }
 
-    public function findByTag($tag): array
-    {
-        return $this->createQueryBuilder('product')
-
-            ->setParameter('tag', $tag)
-            ->andWhere(':tag MEMBER OF product.tags')
-
-            ->addSelect('comments', 'tags')
-            ->leftJoin('product.comments', 'comments')
-            ->leftJoin('product.tags', 'tags')
-            ->orderBy('product.id', 'DESC')
-            ->getQuery()
-            ->getResult();
+        return $qb->getQuery()->getResult();
     }
 
 //    /**

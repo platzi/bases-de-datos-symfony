@@ -3,8 +3,12 @@
     |
     {% for tag in product.tags %}
         <a 
-            href="{{ path('app_tag', { id: tag.id }) }}" 
-            class="badge bg-light text-dark text-decoration-none"
+            href="{{ path('app_home', { tag: tag.name }) }}" 
+            class="badge text-decoration-none {{
+                tag.name == app.request.get('tag')
+                ? 'bg-dark text-white'
+                : 'bg-light text-dark'
+            }}"
         >
             {{ tag.name }}
         </a>
