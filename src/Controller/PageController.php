@@ -2,10 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Tag;
+use App\Repository\CommentRepository;
+use App\Repository\ProductRepository;
+use App\Repository\TagRepository;
+
 use App\Entity\Product;
-use App\Entity\Comment;
-use Doctrine\ORM\EntityManagerInterface;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,16 +16,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class PageController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function home(Request $request, EntityManagerInterface $entityManager): Response
+    public function home(Request $request, TagRepository $tagRepository, ProductRepository $productRepository): Response
     {
         $tag = null;
 
         if ($request->get('tag')) {
-            $tag = $entityManager->getRepository(Tag::class)->findOneBy(['name' => $request->get('tag')]);
+            $tag = $tagRepository->findOneBy(['name' => $request->get('tag')]);
         }
 
         return $this->render('page/home.html.twig', [
-            'products' => $entityManager->getRepository(Product::class)->findLatest($tag)
+            'products' => $productRepository->findLatest($tag)
         ]);
     }
 
@@ -37,10 +38,10 @@ class PageController extends AbstractController
     }
 
     #[Route('/comentarios', name: 'app_comments')]
-    public function comments(EntityManagerInterface $entityManager): Response
+    public function comments(CommentRepository $commentRepository): Response
     {
         return $this->render('page/comments.html.twig', [
-            'comments' => $entityManager->getRepository(Comment::class)->findAllComments()
+            'comments' => $commentRepository->findAllComments()
         ]);
     }
 }
