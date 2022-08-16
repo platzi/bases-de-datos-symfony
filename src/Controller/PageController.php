@@ -22,10 +22,11 @@ class PageController extends AbstractController
     }
 
     #[Route('/etiqueta/{id}', name: 'app_tag')]
-    public function tag(Tag $tag): Response
+    public function tag(Tag $tag, EntityManagerInterface $entityManager): Response
     {
         return $this->render('page/tag.html.twig', [
-            'tag' => $tag
+            'tag' => $tag,
+            'products' => $entityManager->getRepository(Product::class)->findByTag($tag)
         ]);
     }
 
@@ -41,7 +42,7 @@ class PageController extends AbstractController
     public function comments(EntityManagerInterface $entityManager): Response
     {
         return $this->render('page/comments.html.twig', [
-            'comments' => $entityManager->getRepository(Comment::class)->findAll()
+            'comments' => $entityManager->getRepository(Comment::class)->findAllComments()
         ]);
     }
 }
